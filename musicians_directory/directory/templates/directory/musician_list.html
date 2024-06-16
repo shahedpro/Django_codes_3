@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Musicians</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Musician Name</th>
+        <th>Email</th>
+        <th>Album Rating</th>
+        <th>Instrument Type</th>
+        <th>Album Name</th>
+        <th>Release Date</th>
+        <th>Actions</th>
+    </tr>
+    {% for musician in object_list %}
+    <tr>
+        <td>{{ musician.id }}</td>
+        <td><a href="{% url 'musician_detail' musician.id %}">{{ musician.first_name }} {{ musician.last_name }}</a></td>
+        <td>{{ musician.email }}</td>
+        <td>{% for album in musician.album_set.all %}{{ album.rating }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+        <td>{{ musician.instrument_type }}</td>
+        <td>{% for album in musician.album_set.all %}{{ album.album_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+        <td>{% for album in musician.album_set.all %}{{ album.release_date }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+        <td>
+            <a href="{% url 'musician_edit' musician.id %}">Edit</a>
+            <a href="{% url 'musician_delete' musician.id %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'musician_add' %}">Add New Musician</a>
+{% endblock %}

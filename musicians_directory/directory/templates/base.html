@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Musicians Directory</title>
+</head>
+<body>
+    <h1>Musicians Directory</h1>
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+    {% else %}
+        <p>You are not logged in. <a href="{% url 'login' %}">Login</a></p>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
