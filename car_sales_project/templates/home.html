@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Home - Car World{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-4">Welcome to Car World!</h1>
+  <p class="lead">Explore our latest car listings.</p>
+  <hr class="my-4">
+  <!-- Additional content here -->
+</div>
+
+<div class="row">
+  <!-- Car listings -->
+  {% for car in cars %}
+  <div class="col-md-4 mb-3">
+    <div class="card">
+      <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.title }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ car.title }}</h5>
+        <p class="card-text">{{ car.description }}</p>
+        <p class="card-text"><strong>Price:</strong> {{ car.price }}</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'buy_car' car.id %}" class="btn btn-primary">Buy Now</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

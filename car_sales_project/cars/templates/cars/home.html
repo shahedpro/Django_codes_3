@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container mt-4">
+  <h1>Welcome to Cars World</h1>
+  <p>Browse through our collection of cars and find the perfect one for you.</p>
+  <img src="{% static 'images/home.jpg' %}" alt="Cars World" class="img-fluid">
+
+  <h2>Car Listings</h2>
+  <form method="GET" action=".">
+    <label for="brand">Filter by Brand:</label>
+    <select name="brand" id="brand">
+      <option value="">All</option>
+      {% for brand in brands %}
+        <option value="{{ brand.name }}">{{ brand.name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">Filter</button>
+  </form>
+
+  <div class="row mt-4">
+    {% for car in cars %}
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ car.title }}</h5>
+            <p class="card-text">{{ car.description|truncatewords:20 }}</p>
+            <p class="card-text"><strong>Price: </strong>${{ car.price }}</p>
+            <a href="{% url 'car_detail' car.pk %}" class="btn btn-primary">View Details</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
